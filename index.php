@@ -1,6 +1,6 @@
 <?php
 require 'vendor/autoload.php';
-require 'src/User.php'; // Assurez-vous que le chemin vers User.php est correct
+require 'src/User.php';
 
 use Slim\Factory\AppFactory;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -13,7 +13,6 @@ $request = $serverRequestCreator->fromGlobals();
 
 $app = AppFactory::create();
 
-// Ajout de la configuration de la base de données
 $container = $app->getContainer();
 
 $container['db'] = function ($c) {
@@ -29,6 +28,7 @@ $app->get('/', function ($request, $response, $args) {
     $response->getBody()->write("Bienvenue sur SlimPHP !");
     return $response;
 });
+
 
 $app->post('/login', function ($request, $response, $args) use ($container) {
     $data = $request->getParsedBody();
