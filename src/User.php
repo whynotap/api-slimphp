@@ -67,4 +67,18 @@ class User {
     public function displayUser() {
         return "Username: " . $this->username . ", Mail: " . $this->mail . ", Motto: " . $this->motto;
     }
-} 
+
+    public static function register($db, $username, $mail, $password, $motto) {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $stmt = $db->prepare("INSERT INTO users (username, mail, password, motto) VALUES (:username, :mail, :password, :motto)");
+
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':mail', $mail);
+        $stmt->bindParam(':password', $hashedPassword);
+        $stmt->bindParam(':motto', $motto);
+        $stmt->execute();
+        $id = $db->lastInsertId();
+        return new User($id, $username, $mail, $hashedPassword, $motto, 0);
+    }
+}
