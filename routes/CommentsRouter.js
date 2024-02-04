@@ -9,17 +9,25 @@ router.post('/', async (req, res) => {
         return res.status(400).json({ message: "Les données de la requête sont invalides" });
     }else{
 
-       const query = 'SELECT * FROM sple_comments WHERE news_id = ' + mysql.escape(news_id);
-          db.query(query, (err, result) => {
-            if (err) {
-              res.send(err);
-            } else {
-              res.send(result);
+        const checkNewsQuery = 'SELECT * FROM sple_news WHERE id = ?';
+        db.query(checkNewsQuery, [news_id], (err, result) => {
+            console.log(result);
+            if (result.length == 0) {
+                return res.status(400).json({ message: "Aucun article disponible" });
+            }else{
+                 const query = 'SELECT * FROM sple_comments WHERE news_id = ' + news_id;
+                  db.query(query, (err, result) => {
+                    if (err) {
+                      res.send(err);
+                    } else {
+                      res.send(result);
+                    }
+                  });
             }
-          });
-    }
 
-    
+        });
+
+    }
 });
 
 module.exports = router;

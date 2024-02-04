@@ -31,35 +31,38 @@ router.post('/', async (req, res) => {
 
     if (errorMessages.length > 0) {
         return res.status(400).json({ message: errorMessages[0] });
+    }else{
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const currentTimestampInSeconds = Math.floor(new Date().getTime() / 1000);
+
+        db.query(checkUserQuery, [username, email], (err, result) => {
+            if (result.length > 0) {
+                return res.status(400).json({ message: "Cet utilisateur ou cette adresse e-mail existe déjà" });
+            }else{
+                const currentTimestampInSeconds = Math.floor(new Date().getTime() / 1000);
+
+                db.query(addUserQuery, [
+                    username,
+                    email,
+                    currentTimestampInSeconds,
+                    hashedPassword,
+                    "Bienvenue sur Vicehabbo",
+                    "lg-44689-63.hd-999999037-97557.cp-9032-95.ch-215-63.sh-800001735-63",
+                    userIp,
+                    "M",
+                    5000,
+                    50,
+                    0
+                ]);
+
+                res.status(200).json({ message: "Utilisateur enregistré avec succès" });
+                    }
+
+        });
+
     }
 
-    try {
-        const existingUser = await db.query(checkUserQuery, [username, email]);
-
-        if (existingUser.length > 0) {
-            return res.status(400).json({ message: "Cet utilisateur ou cette adresse e-mail existe déjà" });
-        }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const currentTimestampInSeconds = Math.floor(new Date().getTime() / 1000);
-
-        await db.query(addUserQuery, [
-            username,
-            email,
-            currentTimestampInSeconds,
-            hashedPassword,
-            "Bienvenue sur Vicehabbo",
-            "lg-44689-63.hd-999999037-97557.cp-9032-95.ch-215-63.sh-800001735-63",
-            userIp,
-            "M",
-            5000,
-            50,
-            0
-        ]);
-
-        res.status(200).json({ message: "Utilisateur enregistré avec succès" });
-    } catch (error) {
-        res.status(500).json({ error: "Erreur lors du traitement de la requête" });
-    }
 });
 
 module.exports = router;
