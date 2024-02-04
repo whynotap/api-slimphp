@@ -8,7 +8,11 @@ router.get('/get/settings', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.send(result);
+      if (result.length === 0) {
+        res.status(400).json({ message: "Cette table sql est vide" });
+      } else {
+        res.send(result);
+      }
     }
   });
 });
