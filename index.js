@@ -23,6 +23,7 @@ const feedsRouter = require("./routes/FeedsRouter");
 const calendarRouter = require("./routes/CalendarRouter");
 const wordfilterRouter = require("./routes/WordfilterRouter");
 const catalogRouter = require("./routes/CatalogRouter");
+const emulatorRouter = require("./routes/EmulatorRouter");
 
 require('./database/db');
 const app = express();
@@ -51,6 +52,7 @@ app.use('/feeds', feedsRouter);
 app.use('/calendar', calendarRouter);
 app.use('/catalog', catalogRouter);
 app.use('/wordfilter', wordfilterRouter);
+app.use('/emulator', emulatorRouter);
 
 app.listen(port, () => {
     console.log(`Serveur démarré depuis : http://localhost:${port}`);
