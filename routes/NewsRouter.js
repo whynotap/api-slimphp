@@ -22,7 +22,6 @@ router.post('/get/comments', async (req, res) => {
 
         const checkNewsQuery = 'SELECT * FROM sple_news WHERE id = ?';
         db.query(checkNewsQuery, [news_id], (err, result) => {
-            console.log(result);
             if (result.length == 0) {
                 return res.status(400).json({ message: "Aucun article disponible" });
             }else{
@@ -50,7 +49,6 @@ router.get('/get/new', (req, res) => {
 
         const checkNewsQuery = 'SELECT * FROM sple_news WHERE id = ?';
         db.query(checkNewsQuery, [news_id], (err, result) => {
-            console.log(result);
             if (result.length == 0) {
                 return res.status(400).json({ message: "Aucun article disponible" });
             }else{

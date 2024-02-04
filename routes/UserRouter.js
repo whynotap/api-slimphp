@@ -27,7 +27,6 @@ router.get('/get/user', (req, res) => {
 
         const checkUserQuery = 'SELECT * FROM users WHERE id = ?';
         db.query(checkUserQuery, [user_id], (err, result) => {
-            console.log(result);
             if (result.length == 0) {
                 return res.status(400).json({ message: "Aucun utilisateur trouvé" });
             }else{

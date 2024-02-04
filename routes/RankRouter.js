@@ -23,7 +23,6 @@ router.get('/get/rank', (req, res) => {
 
         const checkNewsQuery = 'SELECT * FROM permissions WHERE id = ?';
         db.query(checkNewsQuery, [rank_id], (err, result) => {
-            console.log(result);
             if (result.length == 0) {
                 return res.status(400).json({ message: "Aucun rank trouvé" });
             }else{
