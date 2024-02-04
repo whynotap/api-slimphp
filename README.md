@@ -53,5 +53,6 @@ Install my-project with npm
 
 - [Sple](https://github.com/Sple-VH)
 - [Python](https://github.com/whynotap)
+- [Jonathan](https://github.com/Joonaathaann)
 
 
