@@ -22,6 +22,7 @@ const podiumRouter = require("./routes/PodiumRouter");
 const feedsRouter = require("./routes/FeedsRouter");
 const calendarRouter = require("./routes/CalendarRouter");
 const wordfilterRouter = require("./routes/WordfilterRouter");
+const catalogRouter = require("./routes/CatalogRouter");
 
 require('./database/db');
 const app = express();
@@ -48,6 +49,7 @@ app.use('/rank', rankRouter);
 app.use('/podium', podiumRouter);
 app.use('/feeds', feedsRouter);
 app.use('/calendar', calendarRouter);
+app.use('/catalog', catalogRouter);
 app.use('/wordfilter', wordfilterRouter);
 
 app.listen(port, () => {
