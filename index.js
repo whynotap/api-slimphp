@@ -20,6 +20,8 @@ const shopRouter = require("./routes/ShopRouter");
 const rankRouter = require("./routes/RankRouter");
 const podiumRouter = require("./routes/PodiumRouter");
 const feedsRouter = require("./routes/FeedsRouter");
+const calendarRouter = require("./routes/CalendarRouter");
+const wordfilterRouter = require("./routes/WordfilterRouter");
 
 require('./database/db');
 const app = express();
@@ -30,12 +32,11 @@ app.use(express.json());
 app.use(morgan('tiny'));
 app.use(helmet());
 
-// Set up rate limiter: maximum of twenty requests per minute
 const limiter = ratelimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
+  windowMs: 1 * 60 * 1000, 
   max: 20,
 });
-// Apply rate limiter to all requests
+
 app.use(limiter);
 
 app.use(compression());
@@ -46,6 +47,8 @@ app.use('/shop', shopRouter);
 app.use('/rank', rankRouter);
 app.use('/podium', podiumRouter);
 app.use('/feeds', feedsRouter);
+app.use('/calendar', calendarRouter);
+app.use('/wordfilter', wordfilterRouter);
 
 app.listen(port, () => {
     console.log(`Serveur démarré depuis : http://localhost:${port}`);
