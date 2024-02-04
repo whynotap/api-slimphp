@@ -47,7 +47,6 @@ Install my-project with npm
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `api_key` | `string` | **Required**. Your API key |
-| :-------- | :------- | :------------------------- |
 | `news_id` |   `int`  | **Required**. News ID      |
 
 ## Authors
