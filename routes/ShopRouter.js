@@ -13,6 +13,7 @@ router.get('/get/badges', (req, res) => {
   });
 });
 
+
 router.get('/get/bannieres', (req, res) => {
   const query = 'SELECT * FROM sple_shop_bannieres';
   db.query(query, (err, result) => {
