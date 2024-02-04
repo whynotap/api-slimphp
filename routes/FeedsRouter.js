@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database/db.js');
 
-router.get('/get/ranks', (req, res) => {
-  const query = 'SELECT * FROM permissions';
+router.get('/get/feeds', (req, res) => {
+  const query = 'SELECT * FROM sple_users_feeds';
   db.query(query, (err, result) => {
     if (err) {
       res.send(err);
@@ -13,20 +13,19 @@ router.get('/get/ranks', (req, res) => {
   });
 });
 
+router.get('/get/feed', (req, res) => {
+  const { feed_id } = req.body;
 
-router.get('/get/rank', (req, res) => {
-  const { rank_id } = req.body;
-
-    if (!rank_id) {
+    if (!feed_id) {
         return res.status(400).json({ message: "Les données de la requête sont invalides" });
     }else{
 
-        const checkNewsQuery = 'SELECT * FROM permissions WHERE id = ?';
-        db.query(checkNewsQuery, [rank_id], (err, result) => {
+        const checkNewsQuery = 'SELECT * FROM sple_users_feeds WHERE id = ?';
+        db.query(checkNewsQuery, [feed_id], (err, result) => {
             if (result.length == 0) {
-                return res.status(400).json({ message: "Aucun rank trouvé" });
+                return res.status(400).json({ message: "Aucun feed disponible" });
             }else{
-                 const query = 'SELECT * FROM permissions WHERE id = ' + rank_id;
+                 const query = 'SELECT * FROM sple_users_feeds WHERE id = ' + feed_id;
                   db.query(query, (err, result) => {
                     if (err) {
                       res.send(err);
@@ -41,19 +40,19 @@ router.get('/get/rank', (req, res) => {
     }
 });
 
-router.get('/get/staffs', (req, res) => {
-  const { rank_id } = req.body;
+router.post('/get/likes', async (req, res) => {
+    const { feed_id } = req.body;
 
-    if (!rank_id) {
+    if (!feed_id) {
         return res.status(400).json({ message: "Les données de la requête sont invalides" });
     }else{
 
-        const checkNewsQuery = 'SELECT username, motto, rank, look FROM users WHERE rank = ?';
-        db.query(checkNewsQuery, [rank_id], (err, result) => {
+        const checkFeedQuery = 'SELECT * FROM sple_users_feeds WHERE id = ?';
+        db.query(checkFeedQuery, [feed_id], (err, result) => {
             if (result.length == 0) {
-                return res.status(400).json({ message: "Aucun staff trouvé" });
+                return res.status(400).json({ message: "Aucun feed disponible" });
             }else{
-                 const query = 'SELECT username, motto, rank, look FROM users WHERE rank = ' + rank_id;
+                 const query = 'SELECT * FROM sple_likes_feeds WHERE feed_id = ' + feed_id;
                   db.query(query, (err, result) => {
                     if (err) {
                       res.send(err);
