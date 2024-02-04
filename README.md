@@ -52,5 +52,6 @@ Install my-project with npm
 ## Authors
 
 - [Sple](https://github.com/Sple-VH)
+- [Python](https://github.com/whynotap)
 
 
